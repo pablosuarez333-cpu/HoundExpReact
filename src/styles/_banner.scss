@@ -1,0 +1,51 @@
+@use "variables" as *;
+
+.banner{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    min-height:420px;
+
+    padding:60px 8%;
+
+    background:linear-gradient(
+        135deg,
+        $primary-color,
+        darken($primary-color,5%)
+    );
+
+}
+
+.banner-text{
+
+    width:50%;
+
+    color:$white;
+
+    h2{
+
+        color:$white;
+
+        font-size:3rem;
+
+        margin-bottom:20px;
+
+    }
+
+    p{
+
+        font-size:1.2rem;
+
+    }
+
+}
+
+.banner-image{
+
+    width:40%;
+
+}

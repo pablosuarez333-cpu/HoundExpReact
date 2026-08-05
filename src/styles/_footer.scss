@@ -1,0 +1,41 @@
+@use "variables" as *;
+
+.app-footer{
+
+    background:$footer-color;
+
+    color:$white;
+
+    padding:25px 8%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.footer-links{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+    a{
+
+        color:$white;
+
+        transition:$transition;
+
+        &:hover{
+
+            color:$secondary-color;
+
+        }
+
+    }
+
+}

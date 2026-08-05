@@ -1,0 +1,82 @@
+@use "variables" as *;
+
+.lista-guias{
+
+    background:$background-secondary;
+
+}
+
+.tabla-guias{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:$white;
+
+    border-radius:$radius-md;
+
+    overflow:hidden;
+
+    box-shadow:$shadow-md;
+
+}
+
+.tabla-guias thead{
+
+    background:$primary-color;
+
+    color:$white;
+
+}
+
+.tabla-guias th,
+.tabla-guias td{
+
+    padding:16px;
+
+    text-align:center;
+
+}
+
+.tabla-guias tbody tr{
+
+    border-bottom:1px solid #ececec;
+
+    transition:$transition;
+
+    &:hover{
+
+        background:rgba($secondary-color,.10);
+
+    }
+
+}
+
+.tabla-guias button{
+
+    border:none;
+
+    background:$secondary-color;
+
+    color:$primary-color;
+
+    padding:8px 14px;
+
+    border-radius:$radius-sm;
+
+    font-weight:bold;
+
+    transition:$transition;
+
+    cursor:pointer;
+
+    &:hover{
+
+        background:$primary-color;
+
+        color:$white;
+
+    }
+
+}

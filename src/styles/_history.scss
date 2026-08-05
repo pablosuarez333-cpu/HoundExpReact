@@ -1,0 +1,23 @@
+@use "variables" as *;
+
+.historial-guias{
+
+    background:$background-color;
+
+}
+
+#historial-contenido{
+
+    margin-top:25px;
+
+    min-height:180px;
+
+    background:$white;
+
+    border-radius:$radius-md;
+
+    box-shadow:$shadow-sm;
+
+    padding:30px;
+
+}
