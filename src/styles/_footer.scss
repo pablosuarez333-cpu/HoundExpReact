@@ -1,41 +1,37 @@
+
+
 @use "variables" as *;
 
-.app-footer{
+.app-footer {
+  background: $footer-color;
+  color: $white;
+  padding: 25px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
 
-    background:$footer-color;
+  strong {
+    display: block;
+    margin-bottom: 5px;
+  }
 
-    color:$white;
-
-    padding:25px 8%;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+  p {
+    margin: 0;
+  }
 }
 
-.footer-links{
+.footer-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 
-    display:flex;
+  a {
+    color: $white;
+    transition: $transition;
 
-    gap:15px;
-
-    align-items:center;
-
-    a{
-
-        color:$white;
-
-        transition:$transition;
-
-        &:hover{
-
-            color:$secondary-color;
-
-        }
-
+    &:hover {
+      color: $secondary-color;
     }
-
+  }
 }

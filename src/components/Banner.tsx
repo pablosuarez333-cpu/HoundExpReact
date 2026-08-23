@@ -1,15 +1,27 @@
+
+
+import trackingDog from "../assets/img/perro-hound-express-rastreando.png";
+
 function Banner() {
   return (
     <section className="banner">
       <div className="banner-text">
-        <h2>Del 'clic' a tu casa</h2>
-        <p>Visualiza el estado de tu paquete en tiempo real.</p>
+        <h2>
+          Gestión y seguimiento
+          de guías
+        </h2>
+
+        <p>
+          Administra el registro y estado
+          de tus envíos de forma sencilla
+          y centralizada.
+        </p>
       </div>
 
       <div className="banner-image">
         <img
-          src="/src/assets/img/logoAzulBlancoHE.png"
-          alt="Banner"
+          src={trackingDog}
+          alt="Perro Hound Express rastreando un envío"
         />
       </div>
     </section>

@@ -1,62 +1,54 @@
+
+
 @use "variables" as *;
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html{
-
-    scroll-behavior:smooth;
-
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-
-    font-family:$font-main;
-
-    background:$background-color;
-
-    color:$text-color;
-
+body {
+  font-family: $font-main;
+  background: $background-color;
+  color: $text-color;
+  min-width: 320px;
 }
 
-img{
-
-    display:block;
-    max-width:100%;
-
+img {
+  display: block;
+  max-width: 100%;
 }
 
-a{
-
-    text-decoration:none;
-
+a {
+  text-decoration: none;
 }
 
-ul{
-
-    list-style:none;
-
+ul {
+  list-style: none;
 }
 
-section{
-
-    padding:70px 8%;
-
+section {
+  padding: 70px 8%;
 }
 
-h1,h2,h3{
-
-    color:$primary-color;
-
+h1,
+h2,
+h3 {
+  color: $primary-color;
 }
 
-button{
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
 
-    cursor:pointer;
-
-    font-family:inherit;
-
+input,
+select,
+button {
+  font: inherit;
 }

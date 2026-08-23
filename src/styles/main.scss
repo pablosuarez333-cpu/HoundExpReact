@@ -1,3 +1,5 @@
+// src/styles/main.scss
+
 @use "variables";
 @use "base";
 @use "header";
@@ -7,3 +9,97 @@
 @use "table";
 @use "history";
 @use "footer";
+
+@media (max-width: 1100px) {
+  .app-header {
+    padding: 15px 5%;
+  }
+
+  section {
+    padding: 60px 5%;
+  }
+
+  .panel-estadisticas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 850px) {
+  .app-header {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 25px;
+  }
+
+  .banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner-text,
+  .banner-image {
+    width: 100%;
+  }
+
+  .banner-image {
+    max-width: 400px;
+  }
+
+  .form-registro {
+    grid-template-columns: 1fr;
+  }
+
+  .form-error,
+  .btn-submit {
+    grid-column: auto;
+  }
+
+  .panel-estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .history-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .history-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 550px) {
+  .app-title {
+    font-size: 1.1rem;
+  }
+
+  .logo {
+    width: 55px;
+  }
+
+  section {
+    padding: 45px 5%;
+  }
+
+  .banner-text h2 {
+    font-size: 2.2rem;
+  }
+
+  .panel-estadisticas {
+    grid-template-columns: 1fr;
+  }
+
+  .form-registro {
+    padding: 25px;
+  }
+
+  .app-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}

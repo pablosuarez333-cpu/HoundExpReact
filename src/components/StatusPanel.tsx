@@ -1,50 +1,86 @@
-import type { Guide } from "../interfaces/Guide";
 
-interface StatusPanelProps {
 
-    guides: Guide[];
+import { useAppSelector } from "../store/hooks";
 
-}
+function StatusPanel() {
+  const guides = useAppSelector(
+    (state) => state.guides.guides
+  );
 
-function StatusPanel({ guides }: StatusPanelProps) {
+  const statistics = guides.reduce(
+    (result: { total: number; pending: number; inTransit: number; delivered: number; cancelled: number; }, guide: { status: any; }) => {
+      result.total += 1;
 
-    const active = guides.length;
+      switch (guide.status) {
+        case "Pendiente":
+          result.pending += 1;
+          break;
 
-    const transit =
-        guides.filter(g => g.status === "En tránsito").length;
+        case "En tránsito":
+          result.inTransit += 1;
+          break;
 
-    const delivered =
-        guides.filter(g => g.status === "Entregado").length;
+        case "Entregada":
+          result.delivered += 1;
+          break;
 
-    return (
+        case "Cancelada":
+          result.cancelled += 1;
+          break;
 
-        <section className="estado-general" id="estado-general">
+        default:
+          break;
+      }
 
-            <h2>Estado General</h2>
+      return result;
+    },
+    {
+      total: 0,
+      pending: 0,
+      inTransit: 0,
+      delivered: 0,
+      cancelled: 0,
+    }
+  );
 
-            <div className="panel-estadisticas">
+  return (
+    <section
+      id="estado"
+      className="estado-general"
+    >
+      <div className="panel-estadisticas">
+        <article className="stat-card">
+          <h3>Total de guías</h3>
 
-                <div className="stat-card">
-                    <h3>Total de guías activas</h3>
-                    <p>{active}</p>
-                </div>
+          <p>{statistics.total}</p>
+        </article>
 
-                <div className="stat-card">
-                    <h3>En tránsito</h3>
-                    <p>{transit}</p>
-                </div>
+        <article className="stat-card">
+          <h3>Pendientes</h3>
 
-                <div className="stat-card">
-                    <h3>Entregadas</h3>
-                    <p>{delivered}</p>
-                </div>
+          <p>{statistics.pending}</p>
+        </article>
 
-            </div>
+        <article className="stat-card">
+          <h3>En tránsito</h3>
 
-        </section>
+          <p>{statistics.inTransit}</p>
+        </article>
 
-    );
+        <article className="stat-card">
+          <h3>Entregadas</h3>
 
+          <p>{statistics.delivered}</p>
+        </article>
+
+        <article className="stat-card">
+          <h3>Canceladas</h3>
+
+          <p>{statistics.cancelled}</p>
+        </article>
+      </div>
+    </section>
+  );
 }
 
 export default StatusPanel;

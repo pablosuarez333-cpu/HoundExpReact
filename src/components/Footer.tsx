@@ -1,14 +1,27 @@
+
+
 function Footer() {
   return (
     <footer className="app-footer">
+      <div>
+        <strong>
+          Hound Express
+        </strong>
 
-      <p>&copy; 2025 Sistema de Gestión de Guías</p>
-
-      <div className="footer-links">
-        <a href="#">Privacidad</a> |
-        <a href="#">Contacto</a>
+        <p>
+          Sistema de Gestión de Guías
+        </p>
       </div>
 
+      <div className="footer-links">
+        <span>
+          © {new Date().getFullYear()}
+        </span>
+
+        <a href="#registro">
+          Volver a Inicio
+        </a>
+      </div>
     </footer>
   );
 }

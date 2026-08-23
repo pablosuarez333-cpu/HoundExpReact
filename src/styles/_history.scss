@@ -1,23 +1,80 @@
+
+
 @use "variables" as *;
 
-.historial-guias{
-
-    background:$background-color;
-
+.historial-guias {
+  background: $background-color;
 }
 
-#historial-contenido{
+#historial-contenido {
+  margin-top: 25px;
+  min-height: 180px;
+  background: $white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  padding: 30px;
+}
 
-    margin-top:25px;
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 25px;
 
-    min-height:180px;
+  h2 {
+    margin-bottom: 10px;
+  }
 
-    background:$white;
+  p {
+    color: $text-color;
+  }
+}
 
-    border-radius:$radius-md;
+.history-clear-button {
+  border: none;
+  background: $primary-color;
+  color: $white;
+  padding: 10px 16px;
+  border-radius: $radius-sm;
+  font-weight: 600;
+  transition: $transition;
 
-    box-shadow:$shadow-sm;
+  &:hover {
+    background: $secondary-color;
+    color: $primary-color;
+  }
+}
 
-    padding:30px;
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
+.history-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px;
+  border-left: 4px solid $secondary-color;
+  background: $background-color;
+  border-radius: $radius-sm;
+
+  strong {
+    color: $primary-color;
+  }
+
+  span,
+  time {
+    font-size: 0.9rem;
+    color: $text-color;
+  }
+}
+
+.history-empty {
+  padding: 30px;
+  text-align: center;
+  color: $text-color;
 }

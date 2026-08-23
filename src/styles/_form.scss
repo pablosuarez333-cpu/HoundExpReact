@@ -1,102 +1,73 @@
+
+
 @use "variables" as *;
 
-.registro{
-
-    background:$background-secondary;
-
+.registro {
+  background: $background-secondary;
 }
 
-.form-registro{
-
-    max-width:900px;
-
-    margin:auto;
-
-    background:$white;
-
-    padding:40px;
-
-    border-radius:$radius-md;
-
-    box-shadow:$shadow-md;
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:25px;
-
+.form-registro {
+  max-width: 900px;
+  margin: auto;
+  background: $white;
+  padding: 40px;
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
 }
 
-.form-group{
+.form-group {
+  display: flex;
+  flex-direction: column;
 
-    display:flex;
+  label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: $primary-color;
+  }
 
-    flex-direction:column;
+  input,
+  select {
+    padding: 12px;
+    border: 1px solid #4885e5;
+    border-radius: $radius-sm;
+    outline: none;
+    transition: $transition;
+    font-size: 1rem;
 
-    label{
-
-        margin-bottom:8px;
-
-        font-weight:600;
-
-        color:$primary-color;
-
+    &:focus {
+      border-color: $secondary-color;
+      box-shadow:
+        0 0 8px rgba(
+          $secondary-color,
+          0.35
+        );
     }
-
-    input,
-    select{
-
-        padding:12px;
-
-        border:1px solid lighten($primary-color,45%);
-
-        border-radius:$radius-sm;
-
-        outline:none;
-
-        transition:$transition;
-
-        font-size:1rem;
-
-        &:focus{
-
-            border-color:$secondary-color;
-
-            box-shadow:0 0 8px rgba($secondary-color,.35);
-
-        }
-
-    }
-
+  }
 }
 
-.btn-submit{
+.form-error {
+  grid-column: 1 / -1;
+  color: $error-color;
+  font-weight: 600;
+  margin: 0;
+}
 
-    grid-column:1/-1;
+.btn-submit {
+  grid-column: 1 / -1;
+  padding: 14px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $primary-color;
+  color: $white;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: $transition;
 
-    padding:14px;
-
-    border:none;
-
-    border-radius:$radius-sm;
-
-    background:$primary-color;
-
-    color:$white;
-
-    font-size:1rem;
-
-    font-weight:bold;
-
-    transition:$transition;
-
-    &:hover{
-
-        background:$secondary-color;
-
-        color:$primary-color;
-
-    }
-
+  &:hover {
+    background: $secondary-color;
+    color: $primary-color;
+  }
 }

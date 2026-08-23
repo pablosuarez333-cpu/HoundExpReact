@@ -1,12 +1,17 @@
-export type GuideStatus = "Pendiente" | "En tránsito" | "Entregado";
+
+
+export type GuideStatus =
+  | "Pendiente"
+  | "En tránsito"
+  | "Entregada"
+  | "Cancelada";
 
 export interface Guide {
-    id: number;
-    guideNumber: string;
-    origin: string;
-    destination: string;
-    recipient: string;
-    creationDate: string;
-    status: GuideStatus;
-    lastUpdate: string;
+  id: string;
+  guideNumber: string;
+  recipient: string;
+  origin: string;
+  destination: string;
+  status: GuideStatus;
+  date: string;
 }

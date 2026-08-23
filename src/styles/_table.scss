@@ -1,82 +1,97 @@
+
 @use "variables" as *;
 
-.lista-guias{
-
-    background:$background-secondary;
-
+.lista-guias {
+  background: $background-secondary;
 }
 
-.tabla-guias{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    background:$white;
-
-    border-radius:$radius-md;
-
-    overflow:hidden;
-
-    box-shadow:$shadow-md;
-
+.guide-toolbar {
+  max-width: 900px;
+  margin: 0 auto 25px;
 }
 
-.tabla-guias thead{
+.guide-search {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #4885e5;
+  border-radius: $radius-sm;
+  background: $white;
+  outline: none;
+  transition: $transition;
 
-    background:$primary-color;
-
-    color:$white;
-
+  &:focus {
+    border-color: $secondary-color;
+    box-shadow:
+      0 0 8px rgba(
+        $secondary-color,
+        0.35
+      );
+  }
 }
 
-.tabla-guias th,
-.tabla-guias td{
-
-    padding:16px;
-
-    text-align:center;
-
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
-.tabla-guias tbody tr{
+.tabla-guias {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  background: $white;
+  border-radius: $radius-md;
+  overflow: hidden;
+  box-shadow: $shadow-md;
 
-    border-bottom:1px solid #ececec;
+  thead {
+    background: $primary-color;
+    color: $white;
+  }
 
-    transition:$transition;
+  th,
+  td {
+    padding: 16px;
+    text-align: center;
+  }
 
-    &:hover{
+  tbody tr {
+    border-bottom: 1px solid #ececec;
+    transition: $transition;
 
-        background:rgba($secondary-color,.10);
-
+    &:hover {
+      background: rgba(
+        $secondary-color,
+        0.1
+      );
     }
+  }
 
+  select {
+    padding: 8px 10px;
+    border: 1px solid #4885e5;
+    border-radius: $radius-sm;
+    background: $white;
+    outline: none;
+  }
+
+  button {
+    border: none;
+    background: $secondary-color;
+    color: $primary-color;
+    padding: 8px 14px;
+    border-radius: $radius-sm;
+    font-weight: bold;
+    transition: $transition;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
 }
 
-.tabla-guias button{
-
-    border:none;
-
-    background:$secondary-color;
-
-    color:$primary-color;
-
-    padding:8px 14px;
-
-    border-radius:$radius-sm;
-
-    font-weight:bold;
-
-    transition:$transition;
-
-    cursor:pointer;
-
-    &:hover{
-
-        background:$primary-color;
-
-        color:$white;
-
-    }
-
+.empty-state {
+  padding: 30px !important;
+  color: $text-color;
+  text-align: center;
 }

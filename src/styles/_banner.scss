@@ -1,51 +1,45 @@
+
+
 @use "variables" as *;
 
-.banner{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    min-height:420px;
-
-    padding:60px 8%;
-
-    background:linear-gradient(
-        135deg,
-        $primary-color,
-        darken($primary-color,5%)
-    );
-
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  min-height: 420px;
+  padding: 60px 8%;
+  background: linear-gradient(
+    135deg,
+    $primary-color,
+    #051328
+  );
 }
 
-.banner-text{
+.banner-text {
+  width: 50%;
+  color: $white;
 
-    width:50%;
+  h2 {
+    color: $white;
+    font-size: 3rem;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
 
-    color:$white;
-
-    h2{
-
-        color:$white;
-
-        font-size:3rem;
-
-        margin-bottom:20px;
-
-    }
-
-    p{
-
-        font-size:1.2rem;
-
-    }
-
+  p {
+    color: $white;
+    font-size: 1.2rem;
+    line-height: 1.7;
+  }
 }
 
-.banner-image{
+.banner-image {
+  width: 40%;
 
-    width:40%;
-
+  img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+  }
 }

@@ -1,133 +1,191 @@
-import { useState } from "react";
+
+
+import {
+  type FormEvent,
+  useEffect,
+  useState,
+} from "react";
+
+import { addGuide } from "../store/guideSlice";
+import { useAppDispatch } from "../store/hooks";
+
 import type { Guide } from "../interfaces/Guide";
 
-interface RegisterFormProps {
-    addGuide: (guide: Guide) => void;
-}
+function RegisterForm() {
+  const dispatch = useAppDispatch();
 
-function RegisterForm({ addGuide }: RegisterFormProps) {
+  const [guideNumber, setGuideNumber] =
+    useState("");
 
-    const [guideNumber, setGuideNumber] = useState("");
-    const [origin, setOrigin] = useState("");
-    const [destination, setDestination] = useState("");
-    const [recipient, setRecipient] = useState("");
-    const [creationDate, setCreationDate] = useState("");
-    const [status, setStatus] = useState<Guide["status"]>("Pendiente");
+  const [recipient, setRecipient] =
+    useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+  const [origin, setOrigin] =
+    useState("");
 
-        e.preventDefault();
+  const [destination, setDestination] =
+    useState("");
 
-        const newGuide: Guide = {
+  const [error, setError] =
+    useState("");
 
-            id: Date.now(),
+  useEffect(() => {
+    if (error) {
+      setError("");
+    }
+  }, [
+    guideNumber,
+    recipient,
+    origin,
+    destination,
+  ]);
 
-            guideNumber,
+  const handleSubmit = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
 
-            origin,
+    const cleanGuideNumber =
+      guideNumber.trim();
 
-            destination,
+    const cleanRecipient =
+      recipient.trim();
 
-            recipient,
+    const cleanOrigin =
+      origin.trim();
 
-            creationDate,
+    const cleanDestination =
+      destination.trim();
 
-            status,
+    if (
+      !cleanGuideNumber ||
+      !cleanRecipient ||
+      !cleanOrigin ||
+      !cleanDestination
+    ) {
+      setError(
+        "Todos los campos son obligatorios."
+      );
 
-            lastUpdate: new Date().toLocaleString()
+      return;
+    }
 
-        };
-
-        addGuide(newGuide);
-
-        setGuideNumber("");
-        setOrigin("");
-        setDestination("");
-        setRecipient("");
-        setCreationDate("");
-        setStatus("Pendiente");
-
+    const newGuide: Guide = {
+      id: crypto.randomUUID(),
+      guideNumber: cleanGuideNumber,
+      recipient: cleanRecipient,
+      origin: cleanOrigin,
+      destination: cleanDestination,
+      status: "Pendiente",
+      date: new Date().toLocaleDateString(
+        "es-MX"
+      ),
     };
 
-    return (
+    dispatch(addGuide(newGuide));
 
-        <section className="registro" id="registro">
+    setGuideNumber("");
+    setRecipient("");
+    setOrigin("");
+    setDestination("");
+  };
 
-            <h2>Registro de Guías</h2>
+  return (
+    <section
+      id="registro"
+      className="registro"
+    >
+      <form
+        className="form-registro"
+        onSubmit={handleSubmit}
+      >
+        <div className="form-group">
+          <label htmlFor="guideNumber">
+            Número de guía
+          </label>
 
-            <form className="form-registro" onSubmit={handleSubmit}>
+          <input
+            id="guideNumber"
+            type="text"
+            value={guideNumber}
+            onChange={(event) =>
+              setGuideNumber(
+                event.target.value
+              )
+            }
+            placeholder="Ej. HE123456789"
+          />
+        </div>
 
-                <div className="form-group">
-                    <label htmlFor="guideNumber">Número de guía</label>
-                    <input
-                        id="guideNumber"
-                        value={guideNumber}
-                        onChange={(e) => setGuideNumber(e.target.value)}
-                    />
-                </div>
+        <div className="form-group">
+          <label htmlFor="recipient">
+            Destinatario
+          </label>
 
-                <div className="form-group">
-                    <label htmlFor="origin">Origen</label>
-                    <input
-                        id="origin"
-                        value={origin}
-                        onChange={(e) => setOrigin(e.target.value)}
-                    />
-                </div>
+          <input
+            id="recipient"
+            type="text"
+            value={recipient}
+            onChange={(event) =>
+              setRecipient(
+                event.target.value
+              )
+            }
+            placeholder="Nombre del destinatario"
+          />
+        </div>
 
-                <div className="form-group">
-                    <label htmlFor="destination">Destino</label>
-                    <input
-                        id="destination"
-                        value={destination}
-                        onChange={(e) => setDestination(e.target.value)}
-                    />
-                </div>
+        <div className="form-group">
+          <label htmlFor="origin">
+            Origen
+          </label>
 
-                <div className="form-group">
-                    <label htmlFor="recipient">Destinatario</label>
-                    <input
-                        id="recipient"
-                        value={recipient}
-                        onChange={(e) => setRecipient(e.target.value)}
-                    />
-                </div>
+          <input
+            id="origin"
+            type="text"
+            value={origin}
+            onChange={(event) =>
+              setOrigin(
+                event.target.value
+              )
+            }
+            placeholder="Ciudad de origen"
+          />
+        </div>
 
-                <div className="form-group">
-                    <label htmlFor="creationDate">Fecha</label>
-                    <input
-                        id="creationDate"
-                        type="date"
-                        value={creationDate}
-                        onChange={(e) => setCreationDate(e.target.value)}
-                    />
-                </div>
+        <div className="form-group">
+          <label htmlFor="destination">
+            Destino
+          </label>
 
-                <div className="form-group">
-                    <label htmlFor="status">Estado</label>
-                    <select
-                        id="status"
-                        value={status}
-                        onChange={(e) =>
-                            setStatus(e.target.value as Guide["status"])
-                        }
-                    >
-                        <option>Pendiente</option>
-                        <option>En tránsito</option>
-                        <option>Entregado</option>
-                    </select>
-                </div>
+          <input
+            id="destination"
+            type="text"
+            value={destination}
+            onChange={(event) =>
+              setDestination(
+                event.target.value
+              )
+            }
+            placeholder="Ciudad de destino"
+          />
+        </div>
 
-                <button className="btn-submit">
-                    Registrar Guía
-                </button>
+        {error && (
+          <p className="form-error">
+            {error}
+          </p>
+        )}
 
-            </form>
-
-        </section>
-
-    );
-
+        <button
+          type="submit"
+          className="btn-submit"
+        >
+          Registrar guía
+        </button>
+      </form>
+    </section>
+  );
 }
 
 export default RegisterForm;

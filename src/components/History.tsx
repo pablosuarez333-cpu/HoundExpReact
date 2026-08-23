@@ -1,105 +1,91 @@
-import type { HistoryEntry } from "../interfaces/HistoryEntry";
 
-interface HistoryProps {
 
-    history: HistoryEntry[];
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../store/hooks";
 
-    selectedGuide: number | null;
+import {
+  clearHistory,
+} from "../store/guideSlice";
+import type { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
 
-}
+function History() {
+  const dispatch = useAppDispatch();
 
-function History({
+  const history = useAppSelector(
+    (state) => state.guides.history
+  );
 
-    history,
-    selectedGuide
+  const handleClearHistory = () => {
+    dispatch(clearHistory());
+  };
 
-}: HistoryProps) {
+  return (
+    <section
+      id="historial"
+      className="historial-guias"
+    >
+      <div
+        id="historial-contenido"
+      >
+        <div className="history-header">
+          <div>
+            <h2>
+              Historial de actividad
+            </h2>
 
-    const filteredHistory = history.filter(
+            <p>
+              Registro de las operaciones
+              realizadas sobre las guías.
+            </p>
+          </div>
 
-        entry => entry.guideId === selectedGuide
+          {history.length > 0 && (
+            <button
+              type="button"
+              className="history-clear-button"
+              onClick={
+                handleClearHistory
+              }
+            >
+              Limpiar historial
+            </button>
+          )}
+        </div>
 
-    );
+        {history.length === 0 ? (
+          <p className="history-empty">
+            No existen movimientos registrados.
+          </p>
+        ) : (
+          <div className="history-list">
+            {history
+              .slice()
+              .reverse()
+              .map((entry: { id: Key | null | undefined; action: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; guideId: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; date: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }) => (
+                <article
+                  className="history-item"
+                  key={entry.id}
+                >
+                  <strong>
+                    {entry.action}
+                  </strong>
 
-    return (
+                  <span>
+                    Guía: {entry.guideId}
+                  </span>
 
-        <section
-            className="historial-guias"
-            id="historial"
-        >
-
-            <h2>Historial de Guías</h2>
-
-            {
-
-                selectedGuide === null
-
-                    ? (
-
-                        <p>
-
-                            Selecciona una guía para visualizar su historial.
-
-                        </p>
-
-                    )
-
-                    : (
-
-                        filteredHistory.length === 0
-
-                            ? (
-
-                                <p>
-
-                                    La guía aún no tiene movimientos registrados.
-
-                                </p>
-
-                            )
-
-                            : (
-
-                                <ul>
-
-                                    {
-
-                                        filteredHistory.map((entry) => (
-
-                                            <li key={entry.id}>
-
-                                                <strong>
-
-                                                    {entry.date}
-
-                                                </strong>
-
-                                                <br />
-
-                                                {entry.previousStatus}
-
-                                                {" → "}
-
-                                                {entry.newStatus}
-
-                                            </li>
-
-                                        ))
-
-                                    }
-
-                                </ul>
-
-                            )
-
-                    )
-
-            }
-
-        </section>
-
-    );
-
+                  <time>
+                    {entry.date}
+                  </time>
+                </article>
+              ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
 
 export default History;
