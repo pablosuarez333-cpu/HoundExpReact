@@ -13,8 +13,7 @@ function Banner() {
 
         <p>
           Administra el registro y estado
-          de tus envíos de forma sencilla
-          y centralizada.
+          de tus envíos de forma sencilla.
         </p>
       </div>
 
