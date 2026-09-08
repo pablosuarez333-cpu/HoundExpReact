@@ -1,4 +1,3 @@
-
 import {
   useDispatch,
   useSelector,
@@ -11,7 +10,9 @@ import type {
 } from "./store";
 
 export const useAppDispatch =
-  () => useDispatch<AppDispatch>();
+  () =>
+    useDispatch<AppDispatch>();
 
-export const useAppSelector: TypedUseSelectorHook<RootState> =
-  useSelector;
+export const useAppSelector:
+  TypedUseSelectorHook<RootState> =
+    useSelector;

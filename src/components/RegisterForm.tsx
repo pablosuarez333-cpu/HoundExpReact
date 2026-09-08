@@ -1,44 +1,48 @@
-
-
 import {
   type FormEvent,
-  useEffect,
   useState,
 } from "react";
 
-import { addGuide } from "../store/guideSlice";
-import { useAppDispatch } from "../store/hooks";
+import {
+  addGuide,
+} from "../store/guideSlice";
 
-import type { Guide } from "../interfaces/Guide";
+import {
+  useAppDispatch,
+} from "../store/hooks";
+
+import type {
+  Guide,
+} from "../interfaces/Guide";
 
 function RegisterForm() {
-  const dispatch = useAppDispatch();
+  const dispatch =
+    useAppDispatch();
 
-  const [guideNumber, setGuideNumber] =
-    useState("");
-
-  const [recipient, setRecipient] =
-    useState("");
-
-  const [origin, setOrigin] =
-    useState("");
-
-  const [destination, setDestination] =
-    useState("");
-
-  const [error, setError] =
-    useState("");
-
-  useEffect(() => {
-    if (error) {
-      setError("");
-    }
-  }, [
+  const [
     guideNumber,
+    setGuideNumber,
+  ] = useState("");
+
+  const [
     recipient,
+    setRecipient,
+  ] = useState("");
+
+  const [
     origin,
+    setOrigin,
+  ] = useState("");
+
+  const [
     destination,
-  ]);
+    setDestination,
+  ] = useState("");
+
+  const [
+    error,
+    setError,
+  ] = useState("");
 
   const handleSubmit = (
     event: FormEvent<HTMLFormElement>
@@ -72,22 +76,37 @@ function RegisterForm() {
 
     const newGuide: Guide = {
       id: crypto.randomUUID(),
-      guideNumber: cleanGuideNumber,
-      recipient: cleanRecipient,
-      origin: cleanOrigin,
-      destination: cleanDestination,
+
+      guideNumber:
+        cleanGuideNumber,
+
+      recipient:
+        cleanRecipient,
+
+      origin:
+        cleanOrigin,
+
+      destination:
+        cleanDestination,
+
       status: "Pendiente",
-      date: new Date().toLocaleDateString(
-        "es-MX"
-      ),
+
+      date:
+        new Date()
+          .toLocaleDateString(
+            "es-MX"
+          ),
     };
 
-    dispatch(addGuide(newGuide));
+    dispatch(
+      addGuide(newGuide)
+    );
 
     setGuideNumber("");
     setRecipient("");
     setOrigin("");
     setDestination("");
+    setError("");
   };
 
   return (
@@ -100,7 +119,9 @@ function RegisterForm() {
         onSubmit={handleSubmit}
       >
         <div className="form-group">
-          <label htmlFor="guideNumber">
+          <label
+            htmlFor="guideNumber"
+          >
             Número de guía
           </label>
 
@@ -118,7 +139,9 @@ function RegisterForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="recipient">
+          <label
+            htmlFor="recipient"
+          >
             Destinatario
           </label>
 
@@ -136,7 +159,9 @@ function RegisterForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="origin">
+          <label
+            htmlFor="origin"
+          >
             Origen
           </label>
 
@@ -154,7 +179,9 @@ function RegisterForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="destination">
+          <label
+            htmlFor="destination"
+          >
             Destino
           </label>
 

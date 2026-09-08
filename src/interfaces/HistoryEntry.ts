@@ -1,4 +1,3 @@
-
 export interface HistoryEntry {
   id: string;
   guideId: string;

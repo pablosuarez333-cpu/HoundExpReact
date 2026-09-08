@@ -1,11 +1,10 @@
-
-
 import {
   type ChangeEvent,
   useState,
 } from "react";
 
 import {
+  isValidStatusTransition,
   removeGuide,
   updateGuideStatus,
 } from "../store/guideSlice";
@@ -19,50 +18,78 @@ import type {
   GuideStatus,
 } from "../interfaces/Guide";
 
+const GUIDE_STATUSES:
+  GuideStatus[] = [
+    "Pendiente",
+    "En tránsito",
+    "Entregada",
+    "Cancelada",
+  ];
+
 function GuideList() {
-  const dispatch = useAppDispatch();
+  const dispatch =
+    useAppDispatch();
 
-  const guides = useAppSelector(
-    (state) => state.guides.guides
-  );
+  const guides =
+    useAppSelector(
+      (state) =>
+        state.guides.guides
+    );
 
-  const [search, setSearch] =
-    useState("");
+  const [
+    search,
+    setSearch,
+  ] = useState("");
 
   const normalizedSearch =
-    search.trim().toLowerCase();
+    search
+      .trim()
+      .toLowerCase();
 
   const filteredGuides =
     normalizedSearch.length === 0
       ? guides
-      : guides.filter((guide: { guideNumber: string; recipient: string; origin: string; destination: string; }) => {
-          return (
+      : guides.filter(
+          (guide) =>
             guide.guideNumber
               .toLowerCase()
-              .includes(normalizedSearch) ||
+              .includes(
+                normalizedSearch
+              ) ||
             guide.recipient
               .toLowerCase()
-              .includes(normalizedSearch) ||
+              .includes(
+                normalizedSearch
+              ) ||
             guide.origin
               .toLowerCase()
-              .includes(normalizedSearch) ||
+              .includes(
+                normalizedSearch
+              ) ||
             guide.destination
               .toLowerCase()
-              .includes(normalizedSearch)
-          );
-        });
+              .includes(
+                normalizedSearch
+              )
+        );
 
   const handleStatusChange = (
     id: string,
-    event: ChangeEvent<HTMLSelectElement>
+    currentStatus:
+      GuideStatus,
+    event:
+      ChangeEvent<HTMLSelectElement>
   ) => {
-    const status =
-      event.target.value as GuideStatus;
+    const newStatus =
+      event.target
+        .value as GuideStatus;
 
     dispatch(
       updateGuideStatus({
         id,
-        status,
+        status: newStatus,
+        previousStatus:
+          currentStatus,
       })
     );
   };
@@ -70,7 +97,9 @@ function GuideList() {
   const handleRemove = (
     id: string
   ) => {
-    dispatch(removeGuide(id));
+    dispatch(
+      removeGuide(id)
+    );
   };
 
   return (
@@ -84,7 +113,9 @@ function GuideList() {
           className="guide-search"
           value={search}
           onChange={(event) =>
-            setSearch(event.target.value)
+            setSearch(
+              event.target.value
+            )
           }
           placeholder="Buscar guía, destinatario, origen o destino..."
           aria-label="Buscar guía"
@@ -95,18 +126,39 @@ function GuideList() {
         <table className="tabla-guias">
           <thead>
             <tr>
-              <th>Número de guía</th>
-              <th>Destinatario</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Acción</th>
+              <th>
+                Número de guía
+              </th>
+
+              <th>
+                Destinatario
+              </th>
+
+              <th>
+                Origen
+              </th>
+
+              <th>
+                Destino
+              </th>
+
+              <th>
+                Fecha
+              </th>
+
+              <th>
+                Estado
+              </th>
+
+              <th>
+                Acción
+              </th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredGuides.length === 0 ? (
+            {filteredGuides.length ===
+            0 ? (
               <tr>
                 <td
                   colSpan={7}
@@ -120,53 +172,83 @@ function GuideList() {
             ) : (
               filteredGuides.map(
                 (guide) => (
-                  <tr key={guide.id}>
+                  <tr
+                    key={
+                      guide.id
+                    }
+                  >
                     <td>
-                      {guide.guideNumber}
+                      {
+                        guide.guideNumber
+                      }
                     </td>
 
                     <td>
-                      {guide.recipient}
+                      {
+                        guide.recipient
+                      }
                     </td>
 
                     <td>
-                      {guide.origin}
+                      {
+                        guide.origin
+                      }
                     </td>
 
                     <td>
-                      {guide.destination}
+                      {
+                        guide.destination
+                      }
                     </td>
 
                     <td>
-                      {guide.date}
+                      {
+                        guide.date
+                      }
                     </td>
 
                     <td>
                       <select
-                        value={guide.status}
-                        onChange={(event) =>
+                        value={
+                          guide.status
+                        }
+                        onChange={(
+                          event
+                        ) =>
                           handleStatusChange(
                             guide.id,
+                            guide.status,
                             event
                           )
                         }
                         aria-label={`Estado de la guía ${guide.guideNumber}`}
                       >
-                        <option value="Pendiente">
-                          Pendiente
-                        </option>
-
-                        <option value="En tránsito">
-                          En tránsito
-                        </option>
-
-                        <option value="Entregada">
-                          Entregada
-                        </option>
-
-                        <option value="Cancelada">
-                          Cancelada
-                        </option>
+                        {GUIDE_STATUSES.map(
+                          (
+                            status
+                          ) => (
+                            <option
+                              key={
+                                status
+                              }
+                              value={
+                                status
+                              }
+                              disabled={
+                                status !==
+                                  guide.status &&
+                                !isValidStatusTransition(
+                                  guide.status,
+                                  status
+                                )
+                              }
+                            >
+                              {
+                                status
+                              }
+                            </option>
+                          )
+                        )}
                       </select>
                     </td>
 

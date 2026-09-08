@@ -1,5 +1,3 @@
-
-
 export type GuideStatus =
   | "Pendiente"
   | "En tránsito"

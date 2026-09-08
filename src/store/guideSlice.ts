@@ -1,6 +1,8 @@
 
-
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 
 import type {
   Guide,
@@ -16,9 +18,53 @@ interface GuidesState {
   history: HistoryEntry[];
 }
 
+interface AddGuidePayload {
+  guide: Guide;
+  historyEntry: HistoryEntry;
+}
+
+interface UpdateGuideStatusPayload {
+  id: string;
+  status: GuideStatus;
+  historyEntry: HistoryEntry;
+}
+
+interface RemoveGuidePayload {
+  id: string;
+  historyEntry: HistoryEntry;
+}
+
 const initialState: GuidesState = {
   guides: [],
   history: [],
+};
+
+export const STATUS_FLOW: Record<
+  GuideStatus,
+  GuideStatus[]
+> = {
+  Pendiente: [
+    "En tránsito",
+    "Cancelada",
+  ],
+
+  "En tránsito": [
+    "Entregada",
+    "Cancelada",
+  ],
+
+  Entregada: [],
+
+  Cancelada: [],
+};
+
+export const isValidStatusTransition = (
+  currentStatus: GuideStatus,
+  nextStatus: GuideStatus
+): boolean => {
+  return STATUS_FLOW[currentStatus].includes(
+    nextStatus
+  );
 };
 
 const createHistoryEntry = (
@@ -29,93 +75,174 @@ const createHistoryEntry = (
     id: crypto.randomUUID(),
     guideId,
     action,
-    date: new Date().toLocaleString("es-MX"),
+    date: new Date().toLocaleString(
+      "es-MX"
+    ),
   };
 };
 
-const guidesSlice = createSlice({
+const guideSlice = createSlice({
   name: "guides",
 
   initialState,
 
   reducers: {
-    addGuide: (
-      state,
-      action: PayloadAction<Guide>
-    ) => {
-      const guideExists = state.guides.some(
-        (guide) =>
-          guide.guideNumber.toLowerCase() ===
-          action.payload.guideNumber.toLowerCase()
-      );
+    addGuide: {
+      reducer: (
+        state,
+        action: PayloadAction<AddGuidePayload>
+      ) => {
+        const {
+          guide,
+          historyEntry,
+        } = action.payload;
 
-      if (guideExists) {
-        return;
-      }
+        const guideExists =
+          state.guides.some(
+            (currentGuide) =>
+              currentGuide.guideNumber
+                .toLowerCase() ===
+              guide.guideNumber
+                .toLowerCase()
+          );
 
-      state.guides.push(action.payload);
+        if (guideExists) {
+          return;
+        }
 
-      state.history.push(
-        createHistoryEntry(
-          action.payload.id,
-          "Guía registrada"
-        )
-      );
+        state.guides.push(guide);
+
+        state.history.push(
+          historyEntry
+        );
+      },
+
+      prepare: (guide: Guide) => {
+        return {
+          payload: {
+            guide,
+
+            historyEntry:
+              createHistoryEntry(
+                guide.id,
+                "Guía registrada"
+              ),
+          },
+        };
+      },
     },
 
-    removeGuide: (
-      state,
-      action: PayloadAction<string>
-    ) => {
-      const guide = state.guides.find(
-        (item) => item.id === action.payload
-      );
+    updateGuideStatus: {
+      reducer: (
+        state,
+        action: PayloadAction<UpdateGuideStatusPayload>
+      ) => {
+        const {
+          id,
+          status,
+          historyEntry,
+        } = action.payload;
 
-      if (!guide) {
-        return;
-      }
+        const guide =
+          state.guides.find(
+            (item) =>
+              item.id === id
+          );
 
-      state.guides = state.guides.filter(
-        (item) => item.id !== action.payload
-      );
+        if (!guide) {
+          return;
+        }
 
-      state.history.push(
-        createHistoryEntry(
-          guide.id,
-          "Guía eliminada"
-        )
-      );
-    },
+        if (
+          guide.status === status
+        ) {
+          return;
+        }
 
-    updateGuideStatus: (
-      state,
-      action: PayloadAction<{
+        if (
+          !isValidStatusTransition(
+            guide.status,
+            status
+          )
+        ) {
+          return;
+        }
+
+        guide.status = status;
+
+        state.history.push(
+          historyEntry
+        );
+      },
+
+      prepare: ({
+        id,
+        status,
+        previousStatus,
+      }: {
         id: string;
         status: GuideStatus;
-      }>
-    ) => {
-      const guide = state.guides.find(
-        (item) => item.id === action.payload.id
-      );
+        previousStatus: GuideStatus;
+      }) => {
+        return {
+          payload: {
+            id,
+            status,
 
-      if (!guide) {
-        return;
-      }
+            historyEntry:
+              createHistoryEntry(
+                id,
+                `Estado cambiado de ${previousStatus} a ${status}`
+              ),
+          },
+        };
+      },
+    },
 
-      if (guide.status === action.payload.status) {
-        return;
-      }
+    removeGuide: {
+      reducer: (
+        state,
+        action: PayloadAction<RemoveGuidePayload>
+      ) => {
+        const {
+          id,
+          historyEntry,
+        } = action.payload;
 
-      const previousStatus = guide.status;
+        const guideExists =
+          state.guides.some(
+            (guide) =>
+              guide.id === id
+          );
 
-      guide.status = action.payload.status;
+        if (!guideExists) {
+          return;
+        }
 
-      state.history.push(
-        createHistoryEntry(
-          guide.id,
-          `Estado cambiado de ${previousStatus} a ${action.payload.status}`
-        )
-      );
+        state.guides =
+          state.guides.filter(
+            (guide) =>
+              guide.id !== id
+          );
+
+        state.history.push(
+          historyEntry
+        );
+      },
+
+      prepare: (id: string) => {
+        return {
+          payload: {
+            id,
+
+            historyEntry:
+              createHistoryEntry(
+                id,
+                "Guía eliminada"
+              ),
+          },
+        };
+      },
     },
 
     clearHistory: (state) => {
@@ -131,10 +258,10 @@ const guidesSlice = createSlice({
 
 export const {
   addGuide,
-  removeGuide,
   updateGuideStatus,
+  removeGuide,
   clearHistory,
   clearGuides,
-} = guidesSlice.actions;
+} = guideSlice.actions;
 
-export default guidesSlice.reducer;
+export default guideSlice.reducer;
