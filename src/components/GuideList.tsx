@@ -106,9 +106,26 @@ function GuideList() {
     <section
       id="guias"
       className="lista-guias"
+      aria-labelledby="guias-title"
     >
+      <h2
+        id="guias-title"
+        className="section-title"
+      >
+        Guías registradas
+      </h2>
+
       <div className="guide-toolbar">
+        <label
+          htmlFor="guide-search"
+          className="sr-only"
+        >
+          Buscar guía por número,
+          destinatario, origen o destino
+        </label>
+
         <input
+          id="guide-search"
           type="search"
           className="guide-search"
           value={search}
@@ -118,39 +135,48 @@ function GuideList() {
             )
           }
           placeholder="Buscar guía, destinatario, origen o destino..."
-          aria-label="Buscar guía"
         />
       </div>
 
-      <div className="table-wrapper">
+      <div
+        className="table-wrapper"
+        tabIndex={0}
+        aria-label="Tabla desplazable de guías registradas"
+      >
         <table className="tabla-guias">
+          <caption className="sr-only">
+            Listado de guías registradas,
+            destinatarios, rutas, fechas y
+            estados de los envíos.
+          </caption>
+
           <thead>
             <tr>
-              <th>
+              <th scope="col">
                 Número de guía
               </th>
 
-              <th>
+              <th scope="col">
                 Destinatario
               </th>
 
-              <th>
+              <th scope="col">
                 Origen
               </th>
 
-              <th>
+              <th scope="col">
                 Destino
               </th>
 
-              <th>
+              <th scope="col">
                 Fecha
               </th>
 
-              <th>
+              <th scope="col">
                 Estado
               </th>
 
-              <th>
+              <th scope="col">
                 Acción
               </th>
             </tr>
@@ -163,6 +189,7 @@ function GuideList() {
                 <td
                   colSpan={7}
                   className="empty-state"
+                  aria-live="polite"
                 >
                   {normalizedSearch
                     ? "No se encontraron guías."
@@ -173,9 +200,7 @@ function GuideList() {
               filteredGuides.map(
                 (guide) => (
                   <tr
-                    key={
-                      guide.id
-                    }
+                    key={guide.id}
                   >
                     <td>
                       {
@@ -221,7 +246,7 @@ function GuideList() {
                             event
                           )
                         }
-                        aria-label={`Estado de la guía ${guide.guideNumber}`}
+                        aria-label={`Cambiar estado de la guía ${guide.guideNumber}. Estado actual: ${guide.status}`}
                       >
                         {GUIDE_STATUSES.map(
                           (
@@ -260,6 +285,7 @@ function GuideList() {
                             guide.id
                           )
                         }
+                        aria-label={`Eliminar guía ${guide.guideNumber}`}
                       >
                         Eliminar
                       </button>

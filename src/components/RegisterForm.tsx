@@ -113,10 +113,29 @@ function RegisterForm() {
     <section
       id="registro"
       className="registro"
+      aria-labelledby="registro-title"
     >
+      <h2
+        id="registro-title"
+        className="section-title"
+      >
+        Registrar nueva guía
+      </h2>
+
+      <p
+        id="registro-description"
+        className="section-description"
+      >
+        Ingresa los datos necesarios
+        para registrar y comenzar el
+        seguimiento de un envío.
+      </p>
+
       <form
         className="form-registro"
         onSubmit={handleSubmit}
+        aria-describedby="registro-description"
+        noValidate
       >
         <div className="form-group">
           <label
@@ -127,6 +146,7 @@ function RegisterForm() {
 
           <input
             id="guideNumber"
+            name="guideNumber"
             type="text"
             value={guideNumber}
             onChange={(event) =>
@@ -135,6 +155,18 @@ function RegisterForm() {
               )
             }
             placeholder="Ej. HE123456789"
+            autoComplete="off"
+            required
+            aria-required="true"
+            aria-invalid={
+              Boolean(error) &&
+              !guideNumber.trim()
+            }
+            aria-describedby={
+              error
+                ? "form-error"
+                : undefined
+            }
           />
         </div>
 
@@ -147,6 +179,7 @@ function RegisterForm() {
 
           <input
             id="recipient"
+            name="recipient"
             type="text"
             value={recipient}
             onChange={(event) =>
@@ -155,6 +188,18 @@ function RegisterForm() {
               )
             }
             placeholder="Nombre del destinatario"
+            autoComplete="name"
+            required
+            aria-required="true"
+            aria-invalid={
+              Boolean(error) &&
+              !recipient.trim()
+            }
+            aria-describedby={
+              error
+                ? "form-error"
+                : undefined
+            }
           />
         </div>
 
@@ -167,6 +212,7 @@ function RegisterForm() {
 
           <input
             id="origin"
+            name="origin"
             type="text"
             value={origin}
             onChange={(event) =>
@@ -175,6 +221,17 @@ function RegisterForm() {
               )
             }
             placeholder="Ciudad de origen"
+            required
+            aria-required="true"
+            aria-invalid={
+              Boolean(error) &&
+              !origin.trim()
+            }
+            aria-describedby={
+              error
+                ? "form-error"
+                : undefined
+            }
           />
         </div>
 
@@ -187,6 +244,7 @@ function RegisterForm() {
 
           <input
             id="destination"
+            name="destination"
             type="text"
             value={destination}
             onChange={(event) =>
@@ -195,11 +253,27 @@ function RegisterForm() {
               )
             }
             placeholder="Ciudad de destino"
+            required
+            aria-required="true"
+            aria-invalid={
+              Boolean(error) &&
+              !destination.trim()
+            }
+            aria-describedby={
+              error
+                ? "form-error"
+                : undefined
+            }
           />
         </div>
 
         {error && (
-          <p className="form-error">
+          <p
+            id="form-error"
+            className="form-error"
+            role="alert"
+            aria-live="assertive"
+          >
             {error}
           </p>
         )}

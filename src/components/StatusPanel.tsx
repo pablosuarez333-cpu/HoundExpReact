@@ -53,8 +53,19 @@ function StatusPanel() {
     <section
       id="estado"
       className="estado-general"
+      aria-labelledby="estado-title"
     >
-      <div className="panel-estadisticas">
+      <h2
+        id="estado-title"
+        className="section-title"
+      >
+        Estado general de las guías
+      </h2>
+
+      <div
+        className="panel-estadisticas"
+        aria-live="polite"
+      >
         <article className="stat-card">
           <h3>
             Total de guías

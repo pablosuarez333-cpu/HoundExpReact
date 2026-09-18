@@ -163,7 +163,7 @@ describe(
     );
 
     test(
-      "no permite seleccionar Entregada directamente desde Pendiente",
+      "no permitira seleccionar Entregada directamente desde Pendiente",
       () => {
         const store =
           createTestStore();

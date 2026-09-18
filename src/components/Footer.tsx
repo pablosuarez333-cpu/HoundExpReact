@@ -1,5 +1,3 @@
-
-
 function Footer() {
   return (
     <footer className="app-footer">
@@ -15,11 +13,15 @@ function Footer() {
 
       <div className="footer-links">
         <span>
-          © {new Date().getFullYear()}
+          © {new Date().getFullYear()}{" "}
+          Hound Express
         </span>
 
-        <a href="#registro">
-          Volver a Inicio
+        <a
+          href="#contenido-principal"
+          aria-label="Volver al inicio del contenido principal"
+        >
+          Volver al inicio
         </a>
       </div>
     </footer>

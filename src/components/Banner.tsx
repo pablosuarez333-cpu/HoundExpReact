@@ -1,14 +1,14 @@
-
-
 import trackingDog from "../assets/img/perro-hound-express-rastreando.png";
 
 function Banner() {
   return (
-    <section className="banner">
+    <section
+      className="banner"
+      aria-labelledby="banner-title"
+    >
       <div className="banner-text">
-        <h2>
-          Gestión y seguimiento
-          de guías
+        <h2 id="banner-title">
+          Gestión y seguimiento de guías
         </h2>
 
         <p>
@@ -20,7 +20,7 @@ function Banner() {
       <div className="banner-image">
         <img
           src={trackingDog}
-          alt="Perro Hound Express rastreando un envío"
+          alt="Perro de Hound Express rastreando una guía de envío"
         />
       </div>
     </section>

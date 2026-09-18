@@ -1,5 +1,4 @@
 
-
 import logo from "../assets/img/logo-Hound_Express-bg-white.png";
 
 function Header() {
@@ -9,7 +8,7 @@ function Header() {
         <img
           className="logo"
           src={logo}
-          alt="Hound Express"
+          alt="Logotipo de Hound Express"
         />
 
         <h1 className="app-title">
@@ -17,7 +16,10 @@ function Header() {
         </h1>
       </div>
 
-      <nav className="main-nav">
+      <nav
+        className="main-nav"
+        aria-label="Navegación principal"
+      >
         <ul>
           <li>
             <a href="#registro">
